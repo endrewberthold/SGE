@@ -3,12 +3,12 @@ package org.sge.auth.service;
 import org.sge.auth.dto.AuthResponseDTO;
 import org.sge.auth.dto.LoginRequestDTO;
 import org.sge.auth.dto.RegisterRequestDTO;
-import org.sge.entity.Client;
-import org.sge.entity.User;
+import org.sge.client.entity.Client;
+import org.sge.user.entity.User;
 import org.sge.enums.AuthProvider;
 import org.sge.enums.Role;
-import org.sge.repository.ClientRepository;
-import org.sge.repository.UserRepository;
+import org.sge.client.repository.ClientRepository;
+import org.sge.user.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

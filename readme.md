@@ -218,11 +218,6 @@ O sistema deve registrar ações críticas dos usuários.
 
 # 4. Requisitos Não Funcionais
 
-## Performance
-
-
----
-
 ## Segurança
 
 * Autenticação JWT/OAuth
@@ -230,133 +225,23 @@ O sistema deve registrar ações críticas dos usuários.
 * Controle de permissões
 * Proteção contra SQL Injection e XSS
 
----
+# 5. Próximas implementações
 
-## Disponibilidade
+## Tarefas
 
+* Finalizar o módulo de autorização por perfil [*****] x
+* Finalizar  o fluxo de estacionamento [*****]
+* Implementar CRUD completo de tarifas [****]
+* Implementar CRUD completo de veículos [****]
+* Criar tratamento global de exceções [****]
+* Criar testes automatizados [****]
 
----
+## Futuro
 
-## Escalabilidade
-
-
----
-
-## Compatibilidade
-
-* Desktop
-* Mobile responsivo
-* Navegadores suportados
-
----
-
-# 5. Arquitetura Técnica
-
-## 5.1 Front-end
-
-### Stack
-
-* Framework: React, React Native
-* Linguagem: JavaScript
-
----
-
-## 5.2 Back-end
-
-### Stack
-
-* Linguagem: Java
-* Framework: Spring Boot
-* Autenticação: OAuth/JWT
-
----
-
-## 5.3 Banco de Dados
-
-### Tecnologia
-
-* PostgreSQL
-
----
-
-## 5.4 Infraestrutura
-
-### Ambiente
-
-* Em desenvolvimento
-
-### Deploy
-
-* CI/CD
-* GitHub Actions
-* Ambientes:
-
-    * Dev
-    * Homologação
-    * Produção
-
----
-
-# 6. Modelagem Inicial
-
-## Entidades Principais
-
-
----
-
-## Relacionamentos
-
-
-
----
-
-# 7. APIs e Integrações
-
-## APIs Internas
-
-* 
-
----
-
-# 8. Segurança
-
-## Controle de Acesso
-
-* Permissões por perfil
-
----
-
-## Auditoria
-
-* Logs de ações
-* Histórico de alterações
-
----
-
-## Dados Sensíveis
-
-* Criptografia
-* LGPD
-* Política de retenção
-
----
-
-# 9. Observabilidade
-
-## Monitoramento
-
-* Logs
-
----
-
-## Ferramentas
-
-* Postman
-
----
-
-# 10. Testes
-
-## Tipos de Teste
-
-* Unitário
+* Controle fino de permissões (CLIENT só gerencia seus próprios recursos).
+* Cadastro de veículos pelo próprio cliente.
+* Sistema de reserva de vagas com disponibilidade em tempo real.
+* Fluxo de contratação de mensalidades.
+* Integração com gateway de pagamento (Stripe, Mercado Pago, etc.).
+* Regras para ativação automática após confirmação do pagamento.
+* Cancelamentos, reembolsos e notificações.

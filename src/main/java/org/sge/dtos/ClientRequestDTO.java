@@ -1,9 +1,0 @@
-package org.sge.dtos;
-
-public record ClientRequestDTO(
-        String name,
-        String email,
-        String document,
-        String phone
-) {
-}
