@@ -29,4 +29,8 @@ public class ParkingSession {
 
     @Enumerated(EnumType.STRING)
     private SessionStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "parking_rate_id")
+    private ParkingRate parkingRate;
 }

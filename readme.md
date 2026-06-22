@@ -229,7 +229,7 @@ O sistema deve registrar ações críticas dos usuários.
 
 ## Tarefas
 
-* Finalizar o módulo de autorização por perfil [*****]
+* Finalizar o módulo de autorização por perfil [*****] x
 * Finalizar  o fluxo de estacionamento [*****]
 * Implementar CRUD completo de tarifas [****]
 * Implementar CRUD completo de veículos [****]

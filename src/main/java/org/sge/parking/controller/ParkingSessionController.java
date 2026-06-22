@@ -6,10 +6,7 @@ import org.sge.parking.dtos.ParkingEntryDTO;
 import org.sge.parking.dtos.ParkingExitDTO;
 import org.sge.parking.dtos.ParkingSessionResponseDTO;
 import org.sge.parking.service.ParkingSessionService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Implementação futura 3:
@@ -36,8 +33,8 @@ public class ParkingSessionController {
             summary = "Start a parking session",
             description = "Create a new parking session for a registered vehicle upon entry"
     )
-    @PostMapping("/entry/{plate}")
-    public ParkingSessionResponseDTO registerEntry(@PathVariable ParkingEntryDTO dto){
+    @PostMapping("/entry")
+    public ParkingSessionResponseDTO registerEntry(@RequestBody ParkingEntryDTO dto){
         return parkingSessionService.registerEntry(dto);
     }
 
@@ -45,8 +42,8 @@ public class ParkingSessionController {
             summary = "End a parking session",
             description = "Ends an active parking session for a registered vehicle"
     )
-    @PostMapping("/exit/{plate}")
-    public ParkingSessionResponseDTO registerExit(@PathVariable ParkingExitDTO dto){
+    @PostMapping("/exit")
+    public ParkingSessionResponseDTO registerExit(@RequestBody ParkingExitDTO dto){
         return parkingSessionService.registerExit(dto);
     }
 }
