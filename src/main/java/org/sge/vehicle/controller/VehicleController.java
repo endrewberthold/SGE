@@ -53,13 +53,30 @@ public class VehicleController {
         return vehicleService.create(clientId, dto);
     }
 
+    @Operation(
+            summary = "Update a vehicle information",
+            description = "Update a registry of a vehicle with an existing client."
+    )
     @PutMapping("/{id}")
     public ResponseEntity<VehicleResponseDTO> update(
+            @Parameter(
+                    description = "Unique identifier of the client who owns the vehicle",
+                    example = "1"
+            )
             @PathVariable Long id,
             @RequestBody UpdateVehicleDTO dto
             ){
         return ResponseEntity.ok(
                 vehicleService.update(id, dto)
         );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Long id
+    ){
+        vehicleService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

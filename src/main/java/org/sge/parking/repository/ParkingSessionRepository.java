@@ -9,9 +9,14 @@ import java.util.Optional;
 
 public interface ParkingSessionRepository extends JpaRepository<ParkingSession, Long> {
 
-    boolean existsByVehicleAndExitTimeIsNull(Vehicle vehicle);
+//    boolean existsByVehicleAndExitTimeIsNull(Vehicle vehicle);
+//
+//    Optional<ParkingSession> findByVehicleAndExitTimeIsNull(Vehicle vehicle);
 
-    Optional<ParkingSession> findByVehicleAndExitTimeIsNull(Vehicle vehicle);
+    boolean existsByVehicleAndStatus(
+            Vehicle vehicle,
+            SessionStatus status
+    );
 
     Optional<ParkingSession> findByVehicleAndStatus(
             Vehicle vehicle,

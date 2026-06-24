@@ -1,6 +1,8 @@
 package org.sge.vehicle.service;
 
+import org.sge.enums.SessionStatus;
 import org.sge.exception.ResourceNotFoundException;
+import org.sge.parking.repository.ParkingSessionRepository;
 import org.sge.vehicle.dtos.UpdateVehicleDTO;
 import org.sge.vehicle.dtos.VehicleRequestDTO;
 import org.sge.vehicle.dtos.VehicleResponseDTO;
@@ -17,13 +19,15 @@ public class VehicleService {
 
     private final VehicleRepository vehicleRepository;
     private final ClientRepository clientRepository;
+    private final ParkingSessionRepository parkingSessionRepository;
 
     public VehicleService(
             VehicleRepository vehicleRepository,
-            ClientRepository clientRepository
+            ClientRepository clientRepository, ParkingSessionRepository parkingSessionRepository
     ){
         this.vehicleRepository = vehicleRepository;
         this.clientRepository = clientRepository;
+        this.parkingSessionRepository = parkingSessionRepository;
     }
 
     /**
@@ -83,5 +87,23 @@ public class VehicleService {
                 savedVehicle.getModel(),
                 savedVehicle.getColor()
         );
+    }
+
+    public void delete(Long id){
+
+        Vehicle vehicle = vehicleRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Veiculo não encontrado."));
+
+        boolean hasOpenSession = parkingSessionRepository.existsByVehicleAndStatus(
+                vehicle,
+                SessionStatus.OPEN
+        );
+
+        if(hasOpenSession){
+            throw new BusinessException(
+                    "Veículo possui sessão aberta."
+            );
+        }
     }
 }
