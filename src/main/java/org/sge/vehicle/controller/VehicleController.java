@@ -3,9 +3,11 @@ package org.sge.vehicle.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.sge.vehicle.dtos.UpdateVehicleDTO;
 import org.sge.vehicle.dtos.VehicleRequestDTO;
 import org.sge.vehicle.dtos.VehicleResponseDTO;
 import org.sge.vehicle.service.VehicleService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -49,5 +51,15 @@ public class VehicleController {
             @RequestBody VehicleRequestDTO dto){
 
         return vehicleService.create(clientId, dto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<VehicleResponseDTO> update(
+            @PathVariable Long id,
+            @RequestBody UpdateVehicleDTO dto
+            ){
+        return ResponseEntity.ok(
+                vehicleService.update(id, dto)
+        );
     }
 }

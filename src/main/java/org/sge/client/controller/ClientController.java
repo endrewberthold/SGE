@@ -6,7 +6,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.sge.client.dtos.ClientDetailsResponseDTO;
 import org.sge.client.dtos.ClientRequestDTO;
 import org.sge.client.dtos.ClientResponseDTO;
+import org.sge.client.dtos.UpdateClientDTO;
 import org.sge.client.service.ClientService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +35,15 @@ public class ClientController {
             @RequestBody ClientRequestDTO dto
     ){
         return clientService.create(dto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClientResponseDTO> update(
+            @PathVariable Long id,
+            @RequestBody UpdateClientDTO dto,
+            ClientService clientService){
+        return ResponseEntity.ok(
+                clientService.update(id, dto));
     }
 
     @Operation(

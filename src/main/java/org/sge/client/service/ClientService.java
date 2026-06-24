@@ -3,6 +3,7 @@ package org.sge.client.service;
 import org.sge.client.dtos.ClientDetailsResponseDTO;
 import org.sge.client.dtos.ClientRequestDTO;
 import org.sge.client.dtos.ClientResponseDTO;
+import org.sge.client.dtos.UpdateClientDTO;
 import org.sge.vehicle.dtos.VehicleResponseDTO;
 import org.sge.client.entity.Client;
 import org.sge.user.entity.User;
@@ -65,13 +66,13 @@ public class ClientService {
             throw new BusinessException("Cliente já cadastrado.");
         }
 
-        Client client = new Client();
+        Client newClient = new Client();
 
-        client.setName(dto.name());
-        client.setDocument(dto.document());
-        client.setPhone(dto.phone());
+        newClient.setName(dto.name());
+        newClient.setDocument(dto.document());
+        newClient.setPhone(dto.phone());
 
-        Client savedClient = clientRepository.save(client);
+        Client savedClient = clientRepository.save(newClient);
 
         return new ClientResponseDTO(
                 savedClient.getId(),
@@ -92,10 +93,35 @@ public class ClientService {
                 .findByEmail(email)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Cliente não encontrado"));
-
         return toDetailsDTO(
                 user.getClient()
         );
+    }
+
+    public ClientResponseDTO update(
+            Long id,
+            UpdateClientDTO dto
+    ){
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Cliente não encontrado."));
+
+        /**
+         * Adicionar validação para localizar cliente pelo documento
+         * antes de salvar, fazer o mesmo para veiculo
+         * */
+
+        client.setName(dto.name());
+        client.setDocument(dto.document());
+        client.setPhone(dto.phone());
+
+        Client savedClient = clientRepository.save(client);
+
+        return new ClientResponseDTO(
+                savedClient.getId(),
+                savedClient.getName()
+        );
+
     }
 
     /**
