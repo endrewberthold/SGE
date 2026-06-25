@@ -37,6 +37,10 @@ public class ClientController {
         return clientService.create(dto);
     }
 
+    @Operation(
+            summary = "Update a client",
+            description = "Update an active client"
+    )
     @PutMapping("/{id}")
     public ResponseEntity<ClientResponseDTO> update(
             @PathVariable Long id,

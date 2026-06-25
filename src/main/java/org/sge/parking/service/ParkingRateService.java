@@ -1,7 +1,9 @@
 package org.sge.parking.service;
 
+import org.sge.exception.ResourceNotFoundException;
 import org.sge.parking.dtos.ParkingRateRequestDTO;
 import org.sge.parking.dtos.ParkingRateResponseDTO;
+import org.sge.parking.dtos.ParkingRateUpdateDTO;
 import org.sge.parking.entity.ParkingRate;
 import org.sge.parking.repository.ParkingRateRepository;
 import org.springframework.stereotype.Service;
@@ -14,22 +16,50 @@ public class ParkingRateService {
         this.parkingRateRepository = parkingRateRepository;
     }
 
+    private ParkingRateResponseDTO toDTO(ParkingRate parkingRate){
+        return new ParkingRateResponseDTO(
+                parkingRate.getId(),
+                parkingRate.getType(),
+                parkingRate.getAmount(),
+                parkingRate.getActive()
+        );
+    }
+
     public ParkingRateResponseDTO create(
             ParkingRateRequestDTO dto
     ){
-        ParkingRate rate = new ParkingRate();
+        ParkingRate newRate = new ParkingRate();
 
-        rate.setType(dto.type());
+        newRate.setType(dto.type());
+        newRate.setAmount(dto.amount());
+        newRate.setActive(dto.active());
+
+        ParkingRate savedRate = parkingRateRepository.save(newRate);
+
+        return toDTO(savedRate);
+    }
+
+    public ParkingRateResponseDTO update(
+            Long id,
+            ParkingRateUpdateDTO dto
+    ){
+        ParkingRate rate = parkingRateRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Tarifa não encontrada"));
+
         rate.setAmount(dto.amount());
-        rate.setActive(dto.active());
 
-        ParkingRate saved = parkingRateRepository.save(rate);
+        ParkingRate savedRate = parkingRateRepository.save(rate);
 
-        return new ParkingRateResponseDTO(
-                saved.getId(),
-                saved.getType(),
-                saved.getAmount(),
-                saved.getActive()
-        );
+        return toDTO(savedRate);
+    }
+
+    public void deactivate(Long id){
+        ParkingRate rate = parkingRateRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Tarifa não encontrada"));
+
+        rate.setActive(false);
+
+        parkingRateRepository.save(rate);
     }
 }

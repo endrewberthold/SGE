@@ -30,10 +30,14 @@ public class VehicleService {
         this.parkingSessionRepository = parkingSessionRepository;
     }
 
-    /**
-     * Implementar método privado para bloco repetido no respomse
-     * do veiculo creado e atualizado
-     * */
+    private VehicleResponseDTO toDTO(Vehicle vehicle){
+        return new VehicleResponseDTO(
+                vehicle.getId(),
+                vehicle.getMark(),
+                vehicle.getModel(),
+                vehicle.getColor()
+        );
+    }
 
     public VehicleResponseDTO create(Long clientId, VehicleRequestDTO dto){
 
@@ -54,12 +58,7 @@ public class VehicleService {
 
         Vehicle savedVehicle = vehicleRepository.save(newVehicle);
 
-        return new VehicleResponseDTO(
-                savedVehicle.getId(),
-                savedVehicle.getMark(),
-                savedVehicle.getModel(),
-                savedVehicle.getColor()
-        );
+        return toDTO(savedVehicle);
     }
 
     public VehicleResponseDTO update(
@@ -81,12 +80,7 @@ public class VehicleService {
 
         Vehicle savedVehicle = vehicleRepository.save(vehicle);
 
-        return new VehicleResponseDTO(
-                savedVehicle.getId(),
-                savedVehicle.getMark(),
-                savedVehicle.getModel(),
-                savedVehicle.getColor()
-        );
+        return toDTO(savedVehicle);
     }
 
     public void delete(Long id){
@@ -105,5 +99,7 @@ public class VehicleService {
                     "Veículo possui sessão aberta."
             );
         }
+
+        vehicleRepository.delete(vehicle);
     }
 }

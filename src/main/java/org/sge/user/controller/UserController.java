@@ -5,11 +5,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.sge.user.dtos.UserRequestDTO;
 import org.sge.user.dtos.UserResponseDTO;
+import org.sge.user.dtos.UserUpdateDTO;
 import org.sge.user.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @ApiResponses({
         @ApiResponse(
@@ -43,5 +42,24 @@ public class UserController {
             @RequestBody UserRequestDTO dto
     ){
         return userService.create(dto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> update(
+            @PathVariable Long id,
+            @RequestBody UserUpdateDTO dto
+    ){
+        return ResponseEntity.ok(
+                userService.update(id, dto)
+        );
+    }
+
+    @PatchMapping("/{id}/deactivate")
+    public ResponseEntity<Void> deactivate(
+            @PathVariable Long id
+    ){
+        userService.deactivate(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

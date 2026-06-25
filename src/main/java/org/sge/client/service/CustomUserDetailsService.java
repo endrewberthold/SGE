@@ -1,6 +1,7 @@
 package org.sge.client.service;
 
 import org.sge.exception.ResourceNotFoundException;
+import org.sge.user.entity.User;
 import org.sge.user.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,10 +19,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Usuário não encontrado"
-                        ));
+
+        User user = userRepository.findByEmail(email).orElseThrow(() ->
+                new ResourceNotFoundException("Usuário não encontrado."));
+
+        if(!user.getActive()){
+            throw new UsernameNotFoundException("Usuário desativado");
+        }
+
+        return user;
     }
 }

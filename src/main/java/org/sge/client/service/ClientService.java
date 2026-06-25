@@ -30,11 +30,13 @@ public class ClientService {
         this.userRepository = userRepository;
     }
 
-    /**
-     * Método privado para reutilização em blocos onde
-     * é pertinente puxar informações do cliente e seus
-     * respectivos ativos (Veiculos, dados cadastrais, etc)
-     * */
+    private ClientResponseDTO toDTO(Client client){
+        return new ClientResponseDTO(
+                client.getId(),
+                client.getName()
+        );
+    }
+
     private ClientDetailsResponseDTO toDetailsDTO(
             Client client
     ){
@@ -74,10 +76,7 @@ public class ClientService {
 
         Client savedClient = clientRepository.save(newClient);
 
-        return new ClientResponseDTO(
-                savedClient.getId(),
-                savedClient.getName()
-        );
+        return toDTO(savedClient);
     }
 
     public ClientDetailsResponseDTO me(){
@@ -106,22 +105,13 @@ public class ClientService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Cliente não encontrado."));
 
-        /**
-         * Adicionar validação para localizar cliente pelo documento
-         * antes de salvar, fazer o mesmo para veiculo
-         * */
-
         client.setName(dto.name());
         client.setDocument(dto.document());
         client.setPhone(dto.phone());
 
         Client savedClient = clientRepository.save(client);
 
-        return new ClientResponseDTO(
-                savedClient.getId(),
-                savedClient.getName()
-        );
-
+        return toDTO(savedClient);
     }
 
     /**
