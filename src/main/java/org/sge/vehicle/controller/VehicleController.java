@@ -11,14 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Implementação futura 1:
- * Localizar cliente por identificador unico CPF,
- * de forma que facilite a localização do perfil
- * para registro do veiculo
- * */
-
-/**
- * Implementação futura 2:
+ * Implementação futura:
  * O proprio cliente poderá cadastrar seus próprios
  * veículos no sistema
  * */
@@ -71,8 +64,16 @@ public class VehicleController {
         );
     }
 
+    @Operation(
+            summary = "Delete a vehicle information",
+            description = "Delete a registry of a vehicle with an existing client."
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
+            @Parameter(
+                    description = "Unique identifier of the client who owns the vehicle",
+                    example = "1"
+            )
             @PathVariable Long id
     ){
         vehicleService.delete(id);

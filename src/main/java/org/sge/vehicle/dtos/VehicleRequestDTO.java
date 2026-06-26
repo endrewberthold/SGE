@@ -2,7 +2,7 @@ package org.sge.vehicle.dtos;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(description = "Data for vehivle registration")
+@Schema(description = "Data for vehicle registration")
 public record VehicleRequestDTO(
         @Schema(
                 description = "Vehicle plate",
