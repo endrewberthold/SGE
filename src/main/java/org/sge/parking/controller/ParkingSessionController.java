@@ -6,7 +6,10 @@ import org.sge.parking.dtos.ParkingEntryDTO;
 import org.sge.parking.dtos.ParkingExitDTO;
 import org.sge.parking.dtos.ParkingSessionResponseDTO;
 import org.sge.parking.service.ParkingSessionService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Implementação futura 3:
@@ -45,5 +48,43 @@ public class ParkingSessionController {
     @PostMapping("/exit")
     public ParkingSessionResponseDTO registerExit(@RequestBody ParkingExitDTO dto){
         return parkingSessionService.registerExit(dto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ParkingSessionResponseDTO> findById(
+            @PathVariable Long id
+    ){
+        return ResponseEntity.ok(
+                parkingSessionService.findById(id)
+        );
+    }
+
+    @GetMapping("/open")
+    public ResponseEntity<List<ParkingSessionResponseDTO>> findOpen(){
+        return ResponseEntity.ok(
+                parkingSessionService.findOpenSessions()
+        );
+    }
+
+    @GetMapping("/closed")
+    public ResponseEntity<List<ParkingSessionResponseDTO>> findClosed(){
+        return ResponseEntity.ok(
+                parkingSessionService.findClosedSessions()
+        );
+    }
+
+    @GetMapping("/vehicle/{plate}")
+    public ResponseEntity<List<ParkingSessionResponseDTO>> findByVehicle(
+            @PathVariable String plate
+    ){
+        return ResponseEntity.ok(parkingSessionService.findByPlate(plate));
+    }
+    @GetMapping("/client/{id}")
+    public ResponseEntity<List<ParkingSessionResponseDTO>> findByClient(
+            @PathVariable Long id
+    ){
+        return ResponseEntity.ok(
+                parkingSessionService.findByClient(id)
+        );
     }
 }

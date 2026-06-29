@@ -5,13 +5,10 @@ import org.sge.vehicle.entity.Vehicle;
 import org.sge.enums.SessionStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ParkingSessionRepository extends JpaRepository<ParkingSession, Long> {
-
-//    boolean existsByVehicleAndExitTimeIsNull(Vehicle vehicle);
-//
-//    Optional<ParkingSession> findByVehicleAndExitTimeIsNull(Vehicle vehicle);
 
     boolean existsByVehicleAndStatus(
             Vehicle vehicle,
@@ -22,4 +19,10 @@ public interface ParkingSessionRepository extends JpaRepository<ParkingSession, 
             Vehicle vehicle,
             SessionStatus status
     );
+
+    List<ParkingSession> findByStatus(SessionStatus status);
+
+    List<ParkingSession> findByOrderByEntryTimeDesc(Vehicle Vehicle);
+
+    List<ParkingSession> findByVehicleClientId(Long id);
 }
